@@ -11,7 +11,8 @@ export default function Subscriptions(){
     const {planos, setPlanos}= useContext(SubscriptionsContext)
 
     const usuarioDes= localStorage.getItem("usuario")
-    console.log(usuarioDes);
+    const informacoes=JSON.parse(usuarioDes)
+    console.log(informacoes);
     
 
     useEffect(()=> {const promise=axios.get("https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships",{
