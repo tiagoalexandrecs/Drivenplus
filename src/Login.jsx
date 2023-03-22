@@ -15,7 +15,6 @@ export default function Login(){
 
     function Subscribe(event){
         event.preventDefault();
-        setInvalido(true)
         const requisition= axios.post("https://mock-api.driven.com.br/api/v4/driven-plus/auth/login", { email: mail, password: senha}); 
         requisition.then((response) => {const user=JSON.stringify(response.data);
         localStorage.setItem("usuario",user);
@@ -27,7 +26,6 @@ export default function Login(){
         }})
         requisition.catch((response) =>{
             alert("Usuário não encontrado, tente novamente")
-            setInvalido(false)
         })
     }
 

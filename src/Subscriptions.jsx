@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import axios from "axios"
 import { useContext } from "react"
 import SubscriptionsContext from "./Context/SubscriptionsContext"
+import { useEffect } from "react"
 
 
 export default function Subscriptions(){
@@ -10,11 +11,12 @@ export default function Subscriptions(){
     const {planos, setPlanos}= useContext(SubscriptionsContext)
 
     const usuarioDes= localStorage.getItem("usuario")
-    const informacoes=JSON.parse(usuarioDes)
+    console.log(usuarioDes);
+    
 
     useEffect(()=> {const promise=axios.get("https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships",{
-        headers: { Authorization: `Bearer ${informacoes.token}` }
-    }); promise.then((response)=>{setPlanos(response.data); console.log(today)})})
+        headers: { Authorization: `Bearer ` }
+    }); promise.then((response)=>{setPlanos(response.data); })})
 
 
     return (
