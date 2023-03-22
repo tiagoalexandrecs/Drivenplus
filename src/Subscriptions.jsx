@@ -1,25 +1,19 @@
-
 import styled from "styled-components"
 import  foto from "./Captura de tela de 2023-03-22 06-41-17.png"
+import Normal from "./Normal.png"
+import Gold from "./Gold.png"
+import Premium from "./Premium.png"
 import { Link } from "react-router-dom"
 import axios from "axios"
 
-export default function Login(){
 
-
-     
-    return(
+export default function Subscriptions(){
+    return (
         <Background>
-            <img src={foto} alt="logo"/>
-            <form >
-               <div><input  data-test="email-input" type="email" required  placeholder="email"  /></div>
-               <br></br>
-               <div><input  data-test="password-input" type="text" required  placeholder="senha"/></div>
-               <br></br>
-               <Link to="/subscriptions"><button  type="submit" data-test="login-btn">ENTRAR</button></Link>
-            </form>
-            <Link  data-test="signup-link" to="/sign-up"><Color>Não tem uma conta? Cadastre-se</Color></Link>
-            
+            <Text>Escolha seu Plano</Text>
+            <img src={Normal} alt="normal"/>
+            <img src={Gold} alt="normal"/>
+            <img src={Premium} alt="normal"/>
         </Background>
     )
 }
@@ -34,11 +28,13 @@ align-items: center;
 justify-content: center;
 background:#0E0E13;
 img{
-    width: 299px;
-height: 49px;
-left: 38px;
-top: 134px;
-margin-bottom:100px;
+    width: 290px;
+    height: 180px;
+    left: 43px;
+    background: #0E0E13;
+border: 3px solid #7E7E7E;
+border-radius: 12px;
+margin-top:24px;
 }
 input{
     
@@ -77,14 +73,16 @@ color: #FFFFFF;
 
 }`;
 
-const Color=styled.div `
+const Text=styled.div `
 font-family: 'Roboto';
 font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 16px;
-text-decoration-line: underline;
-
+font-weight: 700;
+font-size: 32px;
+line-height: 38px;
 color: #FFFFFF;
-
+height: 38px;
+width: 300px;
+left: 56px;
+top: 29px;
+border-radius: nullpx;
 `
