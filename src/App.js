@@ -1,25 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  return(
+    <BrowserRouter>
+    <Routes>
+       <Route path="/" element={<Login/>}/>
+       <Route path="/sign-up" element={<Cadastro/>} />
+       <Route path="/subscriptions" element={<TodayContext.Provider value={TodayValue}><UserContext.Provider value={UserValue}><Histórico/></UserContext.Provider></TodayContext.Provider>}/>
+       <Route path="/home" element={<Hoje/>}/>
+       <Route path="/subscriptions/:ID_DO_PLANO" element={<TodayContext.Provider value={TodayValue}><HabitsContext.Provider value={HabitsValue}><UserContext.Provider value={UserValue}><Hábitos add={add} setAdd={setAdd}/></UserContext.Provider></HabitsContext.Provider></TodayContext.Provider>}/>
+    </Routes>
+    
+    </BrowserRouter>
+  )
 }
 
 export default App;
