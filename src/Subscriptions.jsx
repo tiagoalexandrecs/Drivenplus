@@ -1,19 +1,26 @@
 import styled from "styled-components"
-import  foto from "./Captura de tela de 2023-03-22 06-41-17.png"
-import Normal from "./Normal.png"
-import Gold from "./Gold.png"
-import Premium from "./Premium.png"
 import { Link } from "react-router-dom"
 import axios from "axios"
+import { useContext } from "react"
+import SubscriptionsContext from "./Context/SubscriptionsContext"
 
 
 export default function Subscriptions(){
+
+    const {planos, setPlanos}= useContext(SubscriptionsContext)
+
+    const usuarioDes= localStorage.getItem("usuario")
+    const informacoes=JSON.parse(usuarioDes)
+
+    useEffect(()=> {const promise=axios.get("https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships",{
+        headers: { Authorization: `Bearer ${informacoes.token}` }
+    }); promise.then((response)=>{setPlanos(response.data); console.log(today)})})
+
+
     return (
         <Background>
             <Text>Escolha seu Plano</Text>
-            <img src={Normal} alt="normal"/>
-            <img src={Gold} alt="normal"/>
-            <img src={Premium} alt="normal"/>
+            <div>{planos.map((i)=> <Link><Container><img src={i.image}/><Text2>{i.price}</Text2></Container></Link>)}</div>
         </Background>
     )
 }
@@ -27,15 +34,7 @@ flex-direction: column;
 align-items: center;
 justify-content: center;
 background:#0E0E13;
-img{
-    width: 290px;
-    height: 180px;
-    left: 43px;
-    background: #0E0E13;
-border: 3px solid #7E7E7E;
-border-radius: 12px;
-margin-top:24px;
-}
+
 input{
     
     background: #FFFFFF;
@@ -85,4 +84,31 @@ width: 300px;
 left: 56px;
 top: 29px;
 border-radius: nullpx;
-`
+`;
+
+const Container= styled.div `
+display:flex;
+flex-direction: row;
+align-items:center;
+justify-content: center;
+width: 290px;
+height: 180px;
+left: 43px;
+background: #0E0E13;
+border: 3px solid #7E7E7E;
+border-radius: 12px;
+margin-top:24px;
+img{
+    height:95px;
+    width:102px;
+}`;
+
+const Text2= styled.div `
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 700;
+font-size: 24px;
+line-height: 28px;
+
+color: #FFFFFF;
+margin-left: 22px;`

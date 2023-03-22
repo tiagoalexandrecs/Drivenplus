@@ -3,18 +3,43 @@ import styled from "styled-components"
 import  foto from "./Captura de tela de 2023-03-22 06-41-17.png"
 import { Link } from "react-router-dom"
 import axios from "axios"
+import { useContext } from "react"
+import LoginContext from "./Context/LoginContext"
+import { useNavigate } from "react-router-dom"
 
 export default function Login(){
+
+    const navigate= useNavigate();
+
+    const {mail, setMail, senha, setSenha}= useContext(LoginContext)
+
+    function Subscribe(event){
+        event.preventDefault();
+        setInvalido(true)
+        const requisition= axios.post("https://mock-api.driven.com.br/api/v4/driven-plus/auth/login", { email: mail, password: senha}); 
+        requisition.then((response) => {const user=JSON.stringify(response.data);
+        localStorage.setItem("usuario",user);
+        if(response.data.membership === null){
+            navigate("/subscriptions")
+        }
+        else{
+        navigate("/home")
+        }})
+        requisition.catch((response) =>{
+            alert("Usuário não encontrado, tente novamente")
+            setInvalido(false)
+        })
+    }
 
 
      
     return(
         <Background>
             <img src={foto} alt="logo"/>
-            <form >
-               <div><input  data-test="email-input" type="email" required  placeholder="email"  /></div>
+            <form onSubmit={Subscribe} >
+               <div><input  data-test="email-input" type="email" required  placeholder="email"  onChange={e => setMail(e.target.value)} /></div>
                <br></br>
-               <div><input  data-test="password-input" type="text" required  placeholder="senha"/></div>
+               <div><input  data-test="password-input" type="text" required  placeholder="senha" onChange={e => setSenha(e.target.value)}/></div>
                <br></br>
                <Link to="/subscriptions"><button  type="submit" data-test="login-btn">ENTRAR</button></Link>
             </form>
