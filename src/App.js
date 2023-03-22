@@ -15,7 +15,7 @@ function App() {
   const [email, setEmail]=useState("")
   const [mail,setMail]=useState("")
   const [senha, setSenha]= useState("")
-  const [planos, setPlano]=useState([])
+  const [planos, setPlanos]=useState([])
   const SignUpValue={name:name, setName:setName, cpf:cpf, setCpf:setCpf, password:password, setPassword:setPassword, email:email, setEmail: setEmail}
   const LoginValue={mail:mail, setMail:setMail, senha:senha, setSenha: setSenha}
   const SubscriptionsValue={planos: planos, setPlanos: setPlanos}
