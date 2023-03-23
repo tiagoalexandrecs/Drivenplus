@@ -33,13 +33,13 @@ export default function Cadastro(){
     return(
         <Background>
          <form onSubmit={SignUp}>
-            <div><input data-test="email-input" type="text" required placeholder="Nome" onChange={e => setName(e.target.value)}/></div>
+            <div><input data-test="email-input" type="text" required value={name} placeholder="Nome" onChange={e => setName(e.target.value)}/></div>
             <br></br>
-            <div><input  data-test="password-input" type="text"  required placeholder="CPF" onChange={e => setCpf(e.target.value)} /></div>
+            <div><input  data-test="password-input" type="number"  value={cpf} required placeholder="CPF" onChange={e => setCpf(e.target.value)} /></div>
             <br></br>
-            <div><input  data-test="user-name-input" type="email" required placeholder="E-mail" onChange={e => setEmail(e.target.value)} /></div>
+            <div><input  data-test="user-name-input" type="email" required value={email} placeholder="E-mail" onChange={e => setEmail(e.target.value)} /></div>
             <br></br>
-            <div><input data-test="user-image-input" type="text" required placeholder="Senha" onChange={e => setPassword(e.target.value)}/></div>
+            <div><input data-test="user-image-input" type="text" required value={password} placeholder="Senha" onChange={e => setPassword(e.target.value)}/></div>
             <br></br>
             <button  type="submit" data-test="signup-btn">CADASTRAR</button>
          </form>

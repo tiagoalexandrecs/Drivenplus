@@ -24,8 +24,8 @@ export default function Login(){
         else{
         navigate("/home")
         }})
-        requisition.catch((response) =>{
-            alert("Usuário não encontrado, tente novamente")
+        requisition.catch((error) =>{
+            alert(error.response.data.message)
         })
     }
 
@@ -35,11 +35,11 @@ export default function Login(){
         <Background>
             <img src={foto} alt="logo"/>
             <form onSubmit={Subscribe} >
-               <div><input  data-test="email-input" type="email" required  placeholder="email"  onChange={e => setMail(e.target.value)} /></div>
+               <div><input  data-test="email-input" type="email" required  value={mail} placeholder="email"  onChange={e => setMail(e.target.value)} /></div>
                <br></br>
-               <div><input  data-test="password-input" type="text" required  placeholder="senha" onChange={e => setSenha(e.target.value)}/></div>
+               <div><input  data-test="password-input" type="text" required value={senha} placeholder="senha" onChange={e => setSenha(e.target.value)}/></div>
                <br></br>
-               <Link to="/subscriptions"><button  type="submit" data-test="login-btn">ENTRAR</button></Link>
+               <button  type="submit" data-test="login-btn">ENTRAR</button>
             </form>
             <Link  data-test="signup-link" to="/sign-up"><Color>Não tem uma conta? Cadastre-se</Color></Link>
             

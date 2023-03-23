@@ -16,7 +16,7 @@ export default function Subscriptions(){
     
 
     useEffect(()=> {const promise=axios.get("https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships",{
-        headers: { Authorization: `Bearer ` }
+        headers: { Authorization: `Bearer ${informacoes.token}` }
     }); promise.then((response)=>{setPlanos(response.data); })})
 
 
