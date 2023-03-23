@@ -23,7 +23,7 @@ export default function Subscriptions(){
     return (
         <Background>
             <Text>Escolha seu Plano</Text>
-            <div>{planos.map((i)=> <Link><Container><img src={i.image}/><Text2>{i.price}</Text2></Container></Link>)}</div>
+            <div>{planos.map((i)=> <Link to={`/subscriptions/${i.id}`}><Container><img src={i.image}/><Text2>{i.price}</Text2></Container></Link>)}</div>
         </Background>
     )
 }
