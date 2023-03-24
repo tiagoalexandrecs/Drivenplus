@@ -17,13 +17,15 @@ export default function Signing(){
     console.log(informacoes);
 
 
-    useEffect(()=> {const promise=axios.get(`https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships/${params.ID_DO_PLANO}`,{
+    useEffect(()=> {
+        const promise=axios.get(`https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships/${params.ID_DO_PLANO}`,{
         headers: { Authorization: `Bearer ${informacoes.token}` }
-    }); promise.then((response)=>{const packa=JSON.stringfy(response.data);localStorage.setItem("pack", packa)})})
+        }); 
+        promise.then((response)=>{setPacote(response.data)})
+
+    }, [])
     
-    const pac=localStorage.getItem("pack")
-    const pa=JSON.parse(pac)
-    console.log(pa.perks)
+    console.log(pacote)
 
     function Assinar(event){
         event.preventDefault()
@@ -36,12 +38,12 @@ export default function Signing(){
 
     return(
         <Background>
-            <img src={pa.image} alt="imagem"/>
-            <Text>{pa.name}</Text>
-            <Beneficios>Benefícios:
-            </Beneficios>
+            <img src={pacote?.image} alt="imagem"/>
+            <Text>{pacote?.name}</Text>
+            <Beneficios>Benefícios: {pacote.perks?.map((i)=><li>{i.title}</li>)}
+            </Beneficios> 
             <Text2>Preço:<br></br>
-                 R$ {pa.price} cobrados mensalmente
+                 R$ {pacote?.price} cobrados mensalmente
             </Text2>
             <form onSubmit={Assinar}>
             <div><input data-test="email-input" type="text" required value={cardname} placeholder="Nome no cartão" onChange={e => setCardname(e.target.value)}/></div>
