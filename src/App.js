@@ -23,11 +23,12 @@ function App() {
   const [digits,setDigits]=useState("")
   const [cvv,setCvv]=useState("")
   const [expire, setExpire]=useState("")
+  const [open,setOpen]= useState(false)
   const [pacote, setPacote]= useState([])
   const SignUpValue={name:name, setName:setName, cpf:cpf, setCpf:setCpf, password:password, setPassword:setPassword, email:email, setEmail: setEmail}
   const LoginValue={mail:mail, setMail:setMail, senha:senha, setSenha: setSenha}
   const SubscriptionsValue={planos: planos, setPlanos: setPlanos}
-  const SigningValue={cardname:cardname, setCardname:setCardname, digits:digits, setDigits:setDigits, cvv: cvv, setCvv: setCvv,expire:expire,setExpire: setExpire, pacote:pacote, setPacote: setPacote}
+  const SigningValue={cardname:cardname, setCardname:setCardname, digits:digits, setDigits:setDigits, cvv: cvv, setCvv: setCvv,expire:expire,setExpire: setExpire, pacote:pacote, setPacote: setPacote, open:open, setOpen:setOpen}
 
 
   return(

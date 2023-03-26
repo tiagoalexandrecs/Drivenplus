@@ -2,11 +2,12 @@ import styled from "styled-components"
 import { Link } from "react-router-dom"
 import axios from "axios"
 import { useContext } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 
 export default function Home(){
     
+    const navigate= useNavigate()
 
     const sig= localStorage.getItem("assinatura")
     const signature =JSON.parse(sig)
@@ -15,6 +16,13 @@ export default function Home(){
     const usuarioDes= localStorage.getItem("usuario")
     const informacoes=JSON.parse(usuarioDes)
     console.log(informacoes)
+
+    function Delete(){
+        const top= {headers:{ Authorization: `Bearer ${informacoes.token}` }}
+        const promise=axios.delete(`https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions`,top)
+        promise.then((response)=> navigate("/subscriptions"))
+        promise.catch((error)=> alert(error.response.data.message))
+        }
 
     return(
         <Background>
@@ -25,8 +33,8 @@ export default function Home(){
             <Text>Olá,{informacoes?.name}</Text>
             <Container>{(signature === null? informacoes.membership.perks :signature.membership.perks)?.map((i)=> <Perks><a href={i.link}>{i.title}</a></Perks>)}</Container>
             <Footer>
-                <Change>Mudar plano</Change>
-                <Cancel>Cancelar plano</Cancel>
+                <Change><Link to="/subscriptions">Mudar plano</Link></Change>
+                <Cancel onClick={Delete}>Cancelar plano</Cancel>
             </Footer>
 
 

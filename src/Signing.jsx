@@ -6,18 +6,17 @@ import { useParams } from "react-router-dom"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import SigningContext from "./Context/SigningContext"
+import Modal from "./Modal"
 
 export default function Signing(){
 
     const navigate= useNavigate();
 
-    const {cardname, setCardname, digits, setDigits, cvv, setCvv, expire, setExpire, pacote, setPacote}= useContext(SigningContext)
+    const {cardname, setCardname, digits, setDigits, cvv, setCvv, expire, setExpire, pacote, setPacote, open, setOpen}= useContext(SigningContext)
     const params= useParams();
-    console.log(params)
 
     const usuarioDes= localStorage.getItem("usuario")
     const informacoes=JSON.parse(usuarioDes)
-    console.log(informacoes);
 
 
     useEffect(()=> {
@@ -28,21 +27,24 @@ export default function Signing(){
         })
 
     }, [])
-    
-    console.log(pacote)
+
+
+    function Appear(){
+        setOpen(true)
+    }
+
 
     function Assinar(event){
         event.preventDefault()
         const body= {membershipId:pacote.id, cardName: cardname, cardNumber: digits, securityNumber: cvv, expirationDate: expire}
-        if(window.confirm(`Tem certeza que deseja assinar o plano ${pacote.name},R$${pacote.price}?`)){
-            const promise=axios.post(`https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions`,body,{
+        const promise=axios.post(`https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions`,body,{
                headers: { Authorization: `Bearer ${informacoes.token}` }
              });
             promise.then((response)=>{const signatures=JSON.stringify(response.data);
              localStorage.setItem("assinatura",signatures);
              navigate("/home") })
             promise.catch((error)=> alert(error.response.data.message))
-        }
+        
         
     }
 
@@ -51,22 +53,23 @@ export default function Signing(){
         <Background>
             <img src={pacote?.image} alt="imagem"/>
             <Text>{pacote?.name}</Text>
-            <Beneficios>Benefícios: {pacote.perks?.map((i)=><li>{i.title}</li>)}
+            <Beneficios> <ion-icon name="newspaper-outline"></ion-icon> Benefícios: <br></br> {pacote.perks?.map((i)=><li>{i.title}</li>)}
             </Beneficios> 
-            <Text2>Preço:<br></br>
+            <Text2><ion-icon name="cash-outline"></ion-icon> Preço:<br></br>
                  R$ {pacote?.price} cobrados mensalmente
             </Text2>
-            <form onSubmit={Assinar}>
-            <div><input data-test="email-input" type="text" required value={cardname} placeholder="Nome no cartão" onChange={e => setCardname(e.target.value)}/></div>
-            <br></br>
-            <div><input  data-test="password-input" type="text"  value={digits} required placeholder="Dígitos do cartão" onChange={e => setDigits(e.target.value)} /></div>
-            <br></br>
-            <div><input  data-test="user-name-input" type="number" required value={cvv} placeholder="Código de segurança" onChange={e => setCvv(e.target.value)} /></div>
-            <br></br>
-            <div><input data-test="user-image-input" type="text" required value={expire} placeholder="Validade" onChange={e => setExpire(e.target.value)}/></div>
-            <br></br>
-            <button  type="submit" data-test="signup-btn">ASSINAR</button>
-         </form>
+
+                 <div><Input data-test="email-input" type="text" required value={cardname} placeholder="Nome no cartão" onChange={e => setCardname(e.target.value)}></Input></div>
+                <br></br>
+                <div><Input data-test="password-input" type="text"  value={digits} required placeholder="Dígitos do cartão" onChange={e => setDigits(e.target.value)}></Input></div>
+                 <br></br>
+                <Container>
+                     <div><Input1 data-test="user-name-input" type="number" required value={cvv} placeholder="Código de segurança" onChange={e => setCvv(e.target.value)}></Input1></div>
+                     <div><Input2 data-test="user-image-input" type="text" required value={expire} placeholder="Validade" onChange={e => setExpire(e.target.value)}></Input2></div>
+                     <br></br>
+                </Container>
+                <Button onClick={Appear}>ASSINAR</Button>
+                <Modal pacote={pacote} open={open} onClose={() => setOpen(false)}/>
         </Background>
     )
 }
@@ -83,27 +86,12 @@ background:#0E0E13;
 img{
     width: 105px;
 height: 95px;
-margin-left: 106px;
 margin-top: 87px;
 margin-bottom:12px;
-}
-input{
-    
-    background: #FFFFFF;
-    border-radius: 8px;
-    border: 1px solid #D5D5D5;
-    font-family: 'Roboto';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 16px;
+}`;
 
-color: #7E7E7E;
-width:300px;
-height:52px;
-}
-button{
-    display: flex;
+const Button=styled.button `
+display: flex;
 flex-direction: row;
 justify-content: center;
 align-items: center;
@@ -118,36 +106,18 @@ font-style: normal;
 font-weight: 700;
 font-size: 14px;
 line-height: 16px;
+margin-top:12px;
 
-color: #FFFFFF;
-
-
-}`;
-
-const Color=styled.div `
-font-family: 'Roboto';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 16px;
-text-decoration-line: underline;
-
-color: #FFFFFF;
-
-`;
+color: #FFFFFF;`;
 
 const Text= styled.div `
 height:38px;
-width:164px;
-
+width:180px;
 font-family: 'Roboto';
 font-style: normal;
 font-weight: 700;
 font-size: 32px;
 line-height: 38px;
-
-/* identical to box height */
-
 color: #FFFFFF;`
 
 const Text2= styled.div `
@@ -162,33 +132,70 @@ font-weight: 400;
 font-size: 16px;
 line-height: 19px;
 margin-top:22px;
+margin-right:150px;
+list-style: none;
+counter-reset: my-awesome-counter;
 li{
     font-family: 'Roboto';
 font-style: normal;
 font-weight: 400;
 font-size: 14px;
 line-height: 16px;
-
 color: #FFFFFF;
-}`;
+counter-increment: my-awesome-counter;
+}
+li::before {
+    content: counter(my-awesome-counter) ". ";
+    color: #FFFFFF ;
+    font-weight: bold;
+  }`;
 
-const Alert=styled.div `
-width: 248px;
-height: 210px;
-left: 64px;
-top: 229px;
+
+const Container= styled.div `
+display:flex;
+flex-direction:row;`;
+
+const Input1= styled.input `
 background: #FFFFFF;
-border-radius: 12px;
+    border-radius: 8px;
+    border: 1px solid #D5D5D5;
+    font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 16px;
+
+color: #7E7E7E;
+width:140px;
+height:52px;`;
+
+const Input2=styled.input `
+background: #FFFFFF;
+    border-radius: 8px;
+    border: 1px solid #D5D5D5;
+    font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 16px;
+
+color: #7E7E7E;
+width:145px;
+height:52px;
+margin-left:9px;`
+
+const Input=styled.input `
+background: #FFFFFF;
+border-radius: 8px;
+border: 1px solid #D5D5D5;
 font-family: 'Roboto';
 font-style: normal;
-font-weight: 700;
-font-size: 18px;
-line-height: 21px;
-text-align: center;
+font-weight: 400;
+font-size: 14px;
+line-height: 16px;
 
-color: #000000;
-display:flex;
-justify-content:center;
-align-items: center;
+color: #7E7E7E;
+width:300px;
+height:52px;`
 
-`
+
