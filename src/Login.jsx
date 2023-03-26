@@ -22,8 +22,9 @@ export default function Login(){
             navigate("/subscriptions")
         }
         else{
-        navigate("/home")
-        }})
+            navigate("/home")
+        }
+        })
         requisition.catch((error) =>{
             alert(error.response.data.message)
         })

@@ -4,9 +4,12 @@ import axios from "axios"
 import { useContext } from "react"
 import { useParams } from "react-router-dom"
 import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import SigningContext from "./Context/SigningContext"
 
 export default function Signing(){
+
+    const navigate= useNavigate();
 
     const {cardname, setCardname, digits, setDigits, cvv, setCvv, expire, setExpire, pacote, setPacote}= useContext(SigningContext)
     const params= useParams();
@@ -21,7 +24,8 @@ export default function Signing(){
         const promise=axios.get(`https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships/${params.ID_DO_PLANO}`,{
         headers: { Authorization: `Bearer ${informacoes.token}` }
         }); 
-        promise.then((response)=>{setPacote(response.data)})
+        promise.then((response)=>{setPacote(response.data);
+        })
 
     }, [])
     
@@ -29,10 +33,17 @@ export default function Signing(){
 
     function Assinar(event){
         event.preventDefault()
-        const promise=axios.post(`https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions`,{membership:params.ID_DO_PLANO, cardName: cardname, cardNumber: digits, securityNumber: cvv, expirationDate: expire},{
-        headers: { Authorization: `Bearer ${informacoes.token}` }
-    }); promise.then((response)=>{const signatures=JSON.stringify(response.data);
-        localStorage.setItem("assinatura",signatures); })
+        const body= {membershipId:pacote.id, cardName: cardname, cardNumber: digits, securityNumber: cvv, expirationDate: expire}
+        if(window.confirm(`Tem certeza que deseja assinar o plano ${pacote.name},R$${pacote.price}?`)){
+            const promise=axios.post(`https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions`,body,{
+               headers: { Authorization: `Bearer ${informacoes.token}` }
+             });
+            promise.then((response)=>{const signatures=JSON.stringify(response.data);
+             localStorage.setItem("assinatura",signatures);
+             navigate("/home") })
+            promise.catch((error)=> alert(error.response.data.message))
+        }
+        
     }
 
 
@@ -159,4 +170,25 @@ font-size: 14px;
 line-height: 16px;
 
 color: #FFFFFF;
-}`
+}`;
+
+const Alert=styled.div `
+width: 248px;
+height: 210px;
+left: 64px;
+top: 229px;
+background: #FFFFFF;
+border-radius: 12px;
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 700;
+font-size: 18px;
+line-height: 21px;
+text-align: center;
+
+color: #000000;
+display:flex;
+justify-content:center;
+align-items: center;
+
+`
