@@ -37,12 +37,17 @@ export default function Signing(){
         setOpen(true)
     }
 
+    function Retornar(){
+        navigate("/subscriptions")
+    }
+
         
         
 
 
     return(
         <Background>
+            <Voltar onClick={Retornar}><ion-icon style={{height:"28px",width:"25px", color:"white"}} name="arrow-back-outline"></ion-icon></Voltar>
             <img src={pacote?.image} alt="imagem"/>
             <Text>{pacote?.name}</Text>
             <Beneficios> <ion-icon name="newspaper-outline"></ion-icon> Benefícios: <br></br> {pacote.perks?.map((i)=><li>{i.title}</li>)}
@@ -80,6 +85,15 @@ height: 95px;
 margin-top: 87px;
 margin-bottom:12px;
 }`;
+
+const Voltar= styled.button `
+height: 27.29375648498535px;
+width: 28.003116607666016px;
+margin-top: 29.646881103515625px;
+margin-right: 250px;
+border-radius: 0px;
+background: #0E0E13;
+`
 
 const Button=styled.button `
 display: flex;
