@@ -3,7 +3,6 @@ import { Link } from "react-router-dom"
 import axios from "axios"
 import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
-import { useEffect } from "react"
 import UserContext from "./Context/UserContext"
 
 export default function Home(){

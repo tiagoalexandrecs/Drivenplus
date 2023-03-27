@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import { Link } from "react-router-dom"
 import axios from "axios"
 import { useContext } from "react"
 import { useParams } from "react-router-dom"
@@ -14,7 +13,6 @@ export default function Signing(){
     const navigate= useNavigate();
 
     const {usuario,setUsuario}= useContext(UserContext)
-    console.log(usuario)
 
     const {cardname, setCardname, digits, setDigits, cvv, setCvv, expire, setExpire, pacote, setPacote, open, setOpen}= useContext(SigningContext)
     const params= useParams();
