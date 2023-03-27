@@ -4,21 +4,24 @@ import axios from "axios"
 import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
+import UserContext from "./Context/UserContext"
 
 export default function Home(){
     
     const navigate= useNavigate()
 
+    const {usuario,setUsuario}= useContext(UserContext)
+    const usuarioDes= localStorage.getItem("usuario")
+    const informacoes=JSON.parse(usuarioDes);
+    console.log(informacoes)
+    setUsuario(informacoes)
+
     const sig= localStorage.getItem("assinatura")
     const signature =JSON.parse(sig)
-    console.log(signature)
 
-    const usuarioDes= localStorage.getItem("usuario")
-    const informacoes=JSON.parse(usuarioDes)
-    console.log(informacoes)
 
     function Delete(){
-        const top= {headers:{ Authorization: `Bearer ${informacoes.token}` }}
+        const top= {headers:{ Authorization: `Bearer ${usuario.token}` }}
         const promise=axios.delete(`https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions`,top)
         promise.then((response)=> navigate("/subscriptions"))
         promise.catch((error)=> alert(error.response.data.message))
@@ -27,13 +30,13 @@ export default function Home(){
     return(
         <Background>
             <Header>
-                <img src={signature === null? informacoes.membership?.image :signature.membership?.image} alt="foto"/>
-                <Icon><ion-icon name="person-circle-outline"></ion-icon></Icon>
+                <img src={signature === null? informacoes?.membership.image :signature.membership?.image} alt="foto"/>
+                <Icon><ion-icon style={{width:"34px", height:"33px", color:"white"}} name="person-circle-outline"></ion-icon></Icon>
             </Header>
             <Text>Olá,{informacoes?.name}</Text>
-            <Container>{(signature === null? informacoes.membership.perks :signature.membership.perks)?.map((i)=> <Perks><a href={i.link}>{i.title}</a></Perks>)}</Container>
+            <Container>{(signature === null? informacoes?.membership.perks :signature.membership.perks)?.map((i)=> <Perks><a href={i.link}>{i.title}</a></Perks>)}</Container>
             <Footer>
-                <Change><Link to="/subscriptions">Mudar plano</Link></Change>
+                <Change><Link to="/subscriptions"style={{color:"white"}}>Mudar plano</Link></Change>
                 <Cancel onClick={Delete}>Cancelar plano</Cancel>
             </Footer>
 
@@ -94,7 +97,6 @@ width: 34px;
 border-radius: 0px;
 margin-left:207px;
 margin-top:23px;
-background:white;
 `;
 
 const Text=styled.div `
@@ -172,4 +174,5 @@ height: 52px;
 left: 38px;
 margin-top:8px;
 background:#FF4747;
-border-radius: 8px;`
+border-radius: 8px;
+color:white;`

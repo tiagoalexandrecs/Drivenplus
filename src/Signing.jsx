@@ -7,10 +7,14 @@ import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import SigningContext from "./Context/SigningContext"
 import Modal from "./Modal"
+import UserContext from "./Context/UserContext"
 
 export default function Signing(){
 
     const navigate= useNavigate();
+
+    const {usuario,setUsuario}= useContext(UserContext)
+    console.log(usuario)
 
     const {cardname, setCardname, digits, setDigits, cvv, setCvv, expire, setExpire, pacote, setPacote, open, setOpen}= useContext(SigningContext)
     const params= useParams();
@@ -33,20 +37,8 @@ export default function Signing(){
         setOpen(true)
     }
 
-
-    function Assinar(event){
-        event.preventDefault()
-        const body= {membershipId:pacote.id, cardName: cardname, cardNumber: digits, securityNumber: cvv, expirationDate: expire}
-        const promise=axios.post(`https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions`,body,{
-               headers: { Authorization: `Bearer ${informacoes.token}` }
-             });
-            promise.then((response)=>{const signatures=JSON.stringify(response.data);
-             localStorage.setItem("assinatura",signatures);
-             navigate("/home") })
-            promise.catch((error)=> alert(error.response.data.message))
         
         
-    }
 
 
     return(
@@ -58,8 +50,7 @@ export default function Signing(){
             <Text2><ion-icon name="cash-outline"></ion-icon> Preço:<br></br>
                  R$ {pacote?.price} cobrados mensalmente
             </Text2>
-
-                 <div><Input data-test="email-input" type="text" required value={cardname} placeholder="Nome no cartão" onChange={e => setCardname(e.target.value)}></Input></div>
+                <div><Input data-test="email-input" type="text" required value={cardname} placeholder="Nome no cartão" onChange={e => setCardname(e.target.value)}></Input></div>
                 <br></br>
                 <div><Input data-test="password-input" type="text"  value={digits} required placeholder="Dígitos do cartão" onChange={e => setDigits(e.target.value)}></Input></div>
                  <br></br>
@@ -112,7 +103,8 @@ color: #FFFFFF;`;
 
 const Text= styled.div `
 height:38px;
-width:180px;
+width:260px;
+margin-left:30px;
 font-family: 'Roboto';
 font-style: normal;
 font-weight: 700;
@@ -167,7 +159,8 @@ line-height: 16px;
 
 color: #7E7E7E;
 width:140px;
-height:52px;`;
+height:52px;
+margin-top:8px;`;
 
 const Input2=styled.input `
 background: #FFFFFF;
@@ -182,7 +175,8 @@ line-height: 16px;
 color: #7E7E7E;
 width:145px;
 height:52px;
-margin-left:9px;`
+margin-left:9px;
+margin-top:8px;`
 
 const Input=styled.input `
 background: #FFFFFF;
@@ -196,6 +190,7 @@ line-height: 16px;
 
 color: #7E7E7E;
 width:300px;
-height:52px;`
+height:52px;
+margin-top:8px;`
 
 

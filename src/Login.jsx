@@ -6,10 +6,21 @@ import axios from "axios"
 import { useContext } from "react"
 import LoginContext from "./Context/LoginContext"
 import { useNavigate } from "react-router-dom"
+import UserContext from "./Context/UserContext"
+import { useEffect } from "react"
 
 export default function Login(){
 
     const navigate= useNavigate();
+
+    useEffect(()=>{const usuarioDes= localStorage.getItem("usuario")
+    const informacoes=JSON.parse(usuarioDes);
+    if(informacoes != null){
+    navigate("/home")
+    }},[])
+
+    const {usuario,setUsuario}= useContext(UserContext)
+
 
     const {mail, setMail, senha, setSenha}= useContext(LoginContext)
 
@@ -18,6 +29,7 @@ export default function Login(){
         const requisition= axios.post("https://mock-api.driven.com.br/api/v4/driven-plus/auth/login", { email: mail, password: senha}); 
         requisition.then((response) => {const user=JSON.stringify(response.data);
         localStorage.setItem("usuario",user);
+        setUsuario(response.data)
         if(response.data.membership === null){
             navigate("/subscriptions")
         }
@@ -30,22 +42,25 @@ export default function Login(){
         })
     }
 
+        return(
+            <Background>
+                <img src={foto} alt="logo"/>
+                <form onSubmit={Subscribe} >
+                   <div><input  data-test="email-input" type="email" required  value={mail} placeholder="email"  onChange={e => setMail(e.target.value)} /></div>
+                   <br></br>
+                   <div><input  data-test="password-input" type="text" required value={senha} placeholder="senha" onChange={e => setSenha(e.target.value)}/></div>
+                   <br></br>
+                   <button  type="submit" data-test="login-btn">ENTRAR</button>
+                </form>
+                <Link  data-test="signup-link" to="/sign-up"><Color>Não tem uma conta? Cadastre-se</Color></Link>
+                
+            </Background>
+        )
+    
+
 
      
-    return(
-        <Background>
-            <img src={foto} alt="logo"/>
-            <form onSubmit={Subscribe} >
-               <div><input  data-test="email-input" type="email" required  value={mail} placeholder="email"  onChange={e => setMail(e.target.value)} /></div>
-               <br></br>
-               <div><input  data-test="password-input" type="text" required value={senha} placeholder="senha" onChange={e => setSenha(e.target.value)}/></div>
-               <br></br>
-               <button  type="submit" data-test="login-btn">ENTRAR</button>
-            </form>
-            <Link  data-test="signup-link" to="/sign-up"><Color>Não tem uma conta? Cadastre-se</Color></Link>
-            
-        </Background>
-    )
+    
 }
 
 

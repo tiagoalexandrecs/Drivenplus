@@ -9,6 +9,7 @@ import SignUpContext from "./Context/SignUpContext";
 import LoginContext from "./Context/LoginContext";
 import SubscriptionsContext from "./Context/SubscriptionsContext";
 import SigningContext from "./Context/SigningContext";
+import UserContext from "./Context/UserContext";
 
 function App() {
 
@@ -25,24 +26,28 @@ function App() {
   const [expire, setExpire]=useState("")
   const [open,setOpen]= useState(false)
   const [pacote, setPacote]= useState([])
+  const [usuario,setUsuario]=useState({})
+  const [auxiliar,setAuxiliar]=useState(false)
   const SignUpValue={name:name, setName:setName, cpf:cpf, setCpf:setCpf, password:password, setPassword:setPassword, email:email, setEmail: setEmail}
   const LoginValue={mail:mail, setMail:setMail, senha:senha, setSenha: setSenha}
-  const SubscriptionsValue={planos: planos, setPlanos: setPlanos}
+  const SubscriptionsValue={planos: planos, setPlanos: setPlanos, auxiliar: auxiliar, setAuxiliar: setAuxiliar}
   const SigningValue={cardname:cardname, setCardname:setCardname, digits:digits, setDigits:setDigits, cvv: cvv, setCvv: setCvv,expire:expire,setExpire: setExpire, pacote:pacote, setPacote: setPacote, open:open, setOpen:setOpen}
+  const UserValue={usuario,setUsuario}
 
-
-  return(
-    <BrowserRouter>
-    <Routes>
-       <Route path="/" element={<LoginContext.Provider value={LoginValue}><Login/></LoginContext.Provider>}/>
-       <Route path="/sign-up" element={<SignUpContext.Provider value={SignUpValue}><Cadastro/></SignUpContext.Provider>} />
-       <Route path="/subscriptions" element={<SubscriptionsContext.Provider value={SubscriptionsValue}><Subscriptions/></SubscriptionsContext.Provider>}/>
-       <Route path="/home" element={<Home/>}/>
-       <Route path="/subscriptions/:ID_DO_PLANO" element={<SigningContext.Provider value={SigningValue}><Signing/></SigningContext.Provider>}/>
-    </Routes>
-    
-    </BrowserRouter>
-  )
+    return(
+      <UserContext.Provider value={UserValue}>
+        <BrowserRouter>
+         <Routes>
+            <Route path="/" element={<LoginContext.Provider value={LoginValue}><Login/></LoginContext.Provider>}/>
+            <Route path="/sign-up" element={<SignUpContext.Provider value={SignUpValue}><Cadastro/></SignUpContext.Provider>} />
+            <Route path="/subscriptions" element={<SubscriptionsContext.Provider value={SubscriptionsValue}><Subscriptions/></SubscriptionsContext.Provider>}/>
+            <Route path="/home" element={<Home/>}/>
+            <Route path="/subscriptions/:ID_DO_PLANO" element={<SigningContext.Provider value={SigningValue}><Signing/></SigningContext.Provider>}/>
+         </Routes>
+      </BrowserRouter>
+      </UserContext.Provider>
+    )
+  
 }
 
 export default App;

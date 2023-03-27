@@ -8,16 +8,17 @@ import { useEffect } from "react"
 
 export default function Subscriptions(){
 
-    const {planos, setPlanos}= useContext(SubscriptionsContext)
+    const {planos, setPlanos,auxiliar,setAuxiliar}= useContext(SubscriptionsContext)
 
     const usuarioDes= localStorage.getItem("usuario")
     const informacoes=JSON.parse(usuarioDes)
-    console.log(informacoes);
     
 
     useEffect(()=> {const promise=axios.get("https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships",{
         headers: { Authorization: `Bearer ${informacoes.token}` }
-    }); promise.then((response)=>{setPlanos(response.data); })})
+    }); promise.then((response)=>{setPlanos(response.data); 
+    setAuxiliar(true);
+    console.log(response.data)})},[])
 
 
     return (
