@@ -1,3 +1,6 @@
+# About the application:
+Drivenplus simulates an online service subscription application, which allows the user to select or change his subscriptions
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
