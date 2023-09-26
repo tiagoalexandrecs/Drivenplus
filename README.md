@@ -1,5 +1,14 @@
 # About the application:
-Drivenplus simulates an online service subscription application, which allows the user to select or change his subscriptions. With the usage of Javascript as the main programming language, the service´s development was based on React.js framework. 
+Drivenplus simulates an online service subscription application, which allows the user to select or change his subscriptions. With the usage of Javascript as the main programming language, the service´s development was based on React.js framework. Besides, some others technologies are listed below:
+
+- Contexts (for information transfer between pages)
+- Local storage (user's persitance)
+- Modal
+- Axios (promises towards the database)
+- React Router
+- UseEffect and UseNavigate
+- Styled Components and CSS
+  
 
 Below, there are some pictures exemplifying the running application:
 
