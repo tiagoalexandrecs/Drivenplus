@@ -1,5 +1,35 @@
 # About the application:
-Drivenplus simulates an online service subscription application, which allows the user to select or change his subscriptions
+Drivenplus simulates an online service subscription application, which allows the user to select or change his subscriptions. With the usage of Javascript as the main programming language, the service´s development was based on React.js framework. 
+
+Below, there are some pictures exemplifying the running application:
+
+Login Page
+![Captura de tela 2023-09-26 125619](https://github.com/tiagoalexandrecs/Drivenplus/assets/122137155/c6c6a48a-1477-4ed4-8624-625a51dc6ff3)
+
+Signup page
+![Captura de tela 2023-09-26 130134](https://github.com/tiagoalexandrecs/Drivenplus/assets/122137155/4654921c-5bfe-4fb6-aa00-f7fa3e7feadd)
+
+
+After the first login, the user is directed to choose a subscription
+![Captura de tela 2023-09-26 130455](https://github.com/tiagoalexandrecs/Drivenplus/assets/122137155/2a5301ca-405b-4563-99f7-013fa72c1be5)
+
+
+Payment information
+![Captura de tela 2023-09-26 130617](https://github.com/tiagoalexandrecs/Drivenplus/assets/122137155/8cbf12d8-da7c-4bfa-b121-c97eb176a593)
+
+
+Confirmation Modal
+![Captura de tela 2023-09-26 130755](https://github.com/tiagoalexandrecs/Drivenplus/assets/122137155/78d01255-08ea-4210-9918-5a9db7f0aef6)
+
+
+Main page, wehere the user can access the subscription´s benefits , as well as change it or cancel it
+![Captura de tela 2023-09-26 131023](https://github.com/tiagoalexandrecs/Drivenplus/assets/122137155/2a8c8c9b-7afa-4c5b-890d-8484895e10d2)
+
+
+
+
+
+
 
 # Getting Started with Create React App
 
